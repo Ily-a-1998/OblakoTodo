@@ -1,0 +1,25 @@
+<div class='header'>
+  <h2>Задачи</h2>
+</div>
+
+<div class="allProjects">
+  <div class="container">
+    <div class="row">
+      <% @projects.each do |project| %>
+        <div class="col-md-6 col-lg-4 col-12">
+          <div class='oneProject'>
+            <div class='projectTitle'>
+              <%= project.title %>
+            </div>
+            <% project.todos.each do |todo| %>
+              <%= form_with model: todo, method: 'PUT' do |t| %>
+                <div class='todoText'>
+                  <li><label> <input type="checkbox" <%= if todo.isCompleted then "checked" end %> ><label class="text"><%= todo.text %></label>  </li> </label>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>

@@ -1,0 +1,39 @@
+<div class='header'>
+  <h2>Задачи</h2>
+</div>
+
+<div class="allProjects">
+  <div class="container">
+    <div class="row">
+      <% @projects.each do |project| %>
+        <div class="col-md-6 col-lg-4 col-12">
+          <div class='oneProject'>
+            <div class='projectTitle'>
+              <%= project.title %>
+            </div>
+            <% project.todos.each do |todo| %>
+              <%= form_with model: todo, method: 'PUT' do |t| %>
+                <div class='todoText'>
+                  <li><label> <input type="checkbox" <%= if todo.isCompleted then "checked" end %> ><label class="text"><%= todo.text %></label>  </li> </label>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div id="block">
+    <h2>НОВАЯ ЗАДАЧА</h2>
+    <%= form_for Todo.new do |todo| %> 
+      <%= todo.text_field :text, :placeholder => "Название задачи...", :class => "todoTextField" %> <br/>
+      <%= todo.select :project_id,options_from_collection_for_select( @projects,:id ,:title) %>
+      <%= todo.hidden_field :isCompleted, :value =>"false" %>
+      <table>
+        <button type="button" id="btn_c" onclick="hideAdd();"> Cancel </button>
+        <button type="submit" id="btn_ok" style="backcolor:blue" > OK </button>
+      </table>
+    <% end %>
+  </div>
+</div>
